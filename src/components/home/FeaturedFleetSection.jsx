@@ -8,13 +8,24 @@ import FeaturedCarCard from '../cars/FeaturedCarCard';
 import { FEATURED_CARS } from '../../data/homeContent';
 
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 export default function FeaturedFleetSection() {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
+
+  const bindSwiperControls = (swiper) => {
+    if (!prevRef.current || !nextRef.current || !paginationRef.current) return;
+
+    swiper.params.navigation.prevEl = prevRef.current;
+    swiper.params.navigation.nextEl = nextRef.current;
+    swiper.params.pagination.el = paginationRef.current;
+
+    swiper.navigation.destroy();
+    swiper.pagination.destroy();
+    swiper.navigation.init();
+    swiper.pagination.init();
+  };
 
   return (
     <ScrollReveal id="fleet" className="py-10 sm:py-stack-lg overflow-hidden">
@@ -41,11 +52,8 @@ export default function FeaturedFleetSection() {
             slidesPerView={1.08}
             loop
             autoplay={{ delay: 5000, disableOnInteraction: false }}
-            onBeforeInit={(swiper) => {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-              swiper.params.pagination.el = paginationRef.current;
-            }}
+            onBeforeInit={bindSwiperControls}
+            onInit={bindSwiperControls}
             navigation
             pagination={{ clickable: true }}
             breakpoints={{
@@ -61,27 +69,26 @@ export default function FeaturedFleetSection() {
             ))}
           </Swiper>
 
-          <div className="flex flex-col-reverse sm:flex-row items-center justify-between mt-6 sm:mt-8 gap-4">
-            <div ref={paginationRef} className="flex gap-2 justify-center sm:justify-start w-full sm:w-auto" />
+          <div className="fleet-controls mt-6 sm:mt-8">
+            <button
+              ref={prevRef}
+              type="button"
+              className="fleet-nav-btn"
+              aria-label="Previous slide"
+            >
+              <MaterialIcon name="chevron_left" />
+            </button>
 
-            <div className="flex gap-3 self-end sm:self-auto">
-              <button
-                ref={prevRef}
-                type="button"
-                className="w-11 h-11 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-95 touch-manipulation"
-                aria-label="Previous slide"
-              >
-                <MaterialIcon name="chevron_left" />
-              </button>
-              <button
-                ref={nextRef}
-                type="button"
-                className="w-11 h-11 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all active:scale-95 touch-manipulation"
-                aria-label="Next slide"
-              >
-                <MaterialIcon name="chevron_right" />
-              </button>
-            </div>
+            <div ref={paginationRef} className="fleet-pagination" />
+
+            <button
+              ref={nextRef}
+              type="button"
+              className="fleet-nav-btn"
+              aria-label="Next slide"
+            >
+              <MaterialIcon name="chevron_right" />
+            </button>
           </div>
         </div>
       </div>

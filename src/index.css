@@ -114,16 +114,71 @@
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 
-  .fleet-swiper .swiper-pagination-bullet {
-    width: 10px;
-    height: 10px;
+  .fleet-swiper .fleet-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .fleet-swiper .fleet-controls {
+      justify-content: space-between;
+    }
+  }
+
+  .fleet-swiper .fleet-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    border: 1px solid rgba(0, 52, 23, 0.2);
+    color: #003417;
+    background: transparent;
+    transition: all 0.2s ease;
+    touch-action: manipulation;
+  }
+
+  .fleet-swiper .fleet-nav-btn:hover {
+    background: #003417;
+    color: #ffffff;
+  }
+
+  .fleet-swiper .fleet-nav-btn:active {
+    transform: scale(0.95);
+  }
+
+  .fleet-swiper .fleet-nav-btn.swiper-button-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .fleet-swiper .fleet-pagination {
+    position: static !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: auto !important;
+    flex: 1;
+    max-width: 12rem;
+  }
+
+  .fleet-swiper .fleet-pagination .swiper-pagination-bullet {
+    position: static !important;
+    margin: 0 !important;
+    width: 8px;
+    height: 8px;
     background: #c0c9be;
     opacity: 1;
     transition: all 0.3s ease;
   }
 
-  .fleet-swiper .swiper-pagination-bullet-active {
-    width: 28px;
+  .fleet-swiper .fleet-pagination .swiper-pagination-bullet-active {
+    width: 24px;
     border-radius: 9999px;
     background: #336b00;
   }
